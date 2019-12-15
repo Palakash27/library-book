@@ -11,7 +11,6 @@ const headerMapping = [
 ];
 
 const genTableHeader = headerData => {
-  //   const { isbn, title, pageCount, publishedDate } = headerData;
   return Object.keys(headerData)
     .filter(key => headerMapping.includes(key))
     .map(key => ({
