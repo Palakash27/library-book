@@ -1,6 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 
 const headerMapping = [
   "id",
@@ -23,16 +23,14 @@ const genTableHeader = headerData => {
 const BooksTable = props => {
   const columns = genTableHeader(props.books[0]);
   const data = props.books;
+  const tablePayload = { columns, data };
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow
-  } = useTable({
-    columns,
-    data
-  });
+  } = useTable(tablePayload, useSortBy);
 
   // Render the UI for your table
   return (
@@ -41,7 +39,12 @@ const BooksTable = props => {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.render("Header")}
+                {column.isSorted && (
+                  <span>{column.isSortedDesc ? " 🔽" : " 🔼"}</span>
+                )}
+              </th>
             ))}
           </tr>
         ))}
