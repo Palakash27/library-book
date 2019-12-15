@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 import { useTable } from "react-table";
 
 const headerMapping = [
@@ -46,7 +47,7 @@ const BooksTable = props => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
+        {rows.map(row => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
@@ -59,6 +60,10 @@ const BooksTable = props => {
       </tbody>
     </table>
   );
+};
+
+BooksTable.propTypes = {
+  books: propTypes.arrayOf(propTypes.object).isRequired
 };
 
 export default BooksTable;
